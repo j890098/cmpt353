@@ -52,7 +52,9 @@ for i in range(params.N):
         res = sort(randomArr)
         en = time.time() * 1000
         currentRun.append(en-st)
-    results=pd.concat([results,pd.DataFrame([currentRun],columns=["python_builtin","numpyBuiltin"])], ignore_index=False, axis=0)
+    results=pd.concat([results,pd.DataFrame([currentRun],
+                      columns=["python_builtin","numpyBuiltin","implementedQuicksort"])],
+                      ignore_index=False, axis=0)
 results.to_csv('python_data.csv', index=False)
 
 
