@@ -1,4 +1,5 @@
-package java_sorts;
+
+
 import java.io.*;
 import java.util.*;
 import java.time.*;
@@ -8,12 +9,12 @@ import java.time.*;
 // ===================================
 // Main class-- Compile then run with:
 // javac Main.java   -->   java Main.java
-class Main {
+public class Main {
     public static void main(String[] args) {
         // Find and read 'parameters.txt'
         try {
             // Read file and get N and ARRAY_SIZE
-            File file = new File("../parameters.txt");
+            File file = new File("parameters.txt");
             Scanner scanner = new Scanner(file);
             String String_N = scanner.next();
             String String_ARRAY_SIZE = scanner.next();
@@ -27,22 +28,31 @@ class Main {
 
             // N trials of applying built-in sort
             ArrayList<String> time = new ArrayList<String>();
-            time.add("java_dualqsort");
+            time.add("java_dualqsort,implementedQuicksort");
             for (int i = 0; i < N; i++) {
                 // Generate random array
-                ArrayList<Integer> array = new ArrayList<Integer>();
+                ArrayList<Integer> array1 = new ArrayList<Integer>();
+                ArrayList<Integer> array2 = new ArrayList<Integer>();
                 Random random = new Random();
                 for (int j = 0; j < ARRAY_SIZE; j++) {
-                    array.add(random.nextInt(1000000));
+                    int r = random.nextInt(1000000);
+                    array1.add(r);
+                    array2.add(r);
                 }
-
                 // Call built-in sorting algorithm and time it in MILLISECONDS (ms)
                 // NOTE: Java's only sorting algorithm for this type is a dual-pivot quicksort
                 Instant start = Instant.now();
-                Collections.sort(array);
+                Collections.sort(array1);
                 Instant end = Instant.now();
-                long elapsed = Duration.between(start, end).toMillis();
-                time.add(elapsed + "");
+                long elapsed1 = Duration.between(start, end).toMillis();
+
+                // Call the hand-coded implementation of dual-pivot quicksort
+                start = Instant.now();
+                QS qs = new QS();
+                qs.implementedQuicksort(array2, 0, array2.size() - 1);
+                end = Instant.now();
+                long elapsed2 = Duration.between(start, end).toMillis();
+                time.add(elapsed1 + "," + elapsed2);
 
                 // Output results in 'java_sorts.csv'
                 try {
