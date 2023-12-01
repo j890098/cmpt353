@@ -61,10 +61,6 @@ public class Main {
                     for (String entry : time) {
                         // System.out.println(entry);
                         output.append(entry);
-                        // Append comma if not last row
-                        if (rowNumber != N+1) {
-                            output.append(",");
-                        }
                         output.append("\n");
                         rowNumber++;
                     }
