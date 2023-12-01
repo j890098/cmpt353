@@ -6,7 +6,7 @@ from statsmodels.stats import multicomp
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 import matplotlib.pyplot as plt
 
-csvs = ['c_data.csv','javascript_data.csv','python_data.csv']
+csvs = ['data/c_data.csv','data/javascript_data.csv','data/python_data.csv','data/java_sorts.csv']
 # Create an empty list to store DataFrames
 dfs = []
 
@@ -17,6 +17,23 @@ for file_path in csvs:
 
 # Concatenate the DataFrames horizontally along the columns axis
 result_df = pd.concat(dfs, axis=1)
+
+# Format the column names
+cols = []
+count = 0
+for column in result_df.columns:
+    if column == 'implementedQuicksort':
+        if(count == 0):
+            cols.append('python_quicksort')
+        else:
+            cols.append('java_quicksort')
+        count+=1
+        continue
+    cols.append(column)
+result_df.columns = cols
+result_df = result_df.rename(columns={"numpyBuiltin": "numpy_builtin", "java_dualqsort": "java_builtin_dualqsort"})
+
+result_df
 
 # Display the resulting DataFrame
 print(result_df)
@@ -29,3 +46,22 @@ tukey_result = pairwise_tukeyhsd(long_form_df['Speed (ms)'], long_form_df['Algor
 
 # Print the Tukey test results
 print(tukey_result)
+
+# Print some description statistics for easier comparison
+description = result_df.describe()
+print(description.sort_values(by = "mean", axis = 1))
+
+# Make some Visualizations
+fig, ax = plt.subplots(1, 1)
+plt.title('Histogram Of All Sorts')
+ax.hist(result_df)
+ax.legend((result_df.columns),loc='upper right')
+plt.savefig('allSortsHistogram.png')
+
+dfWithoutPythonQS = result_df.drop(columns="python_quicksort")
+
+fig, ax = plt.subplots(1, 1)
+plt.title('Histogram Without Python Quicksort')
+ax.hist(dfWithoutPythonQS)
+ax.legend((dfWithoutPythonQS.columns),loc='upper right')
+plt.savefig('withoutPythonQuicksortHistogram.png')
