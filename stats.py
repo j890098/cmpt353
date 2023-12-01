@@ -65,3 +65,11 @@ plt.title('Histogram Without Python Quicksort')
 ax.hist(dfWithoutPythonQS)
 ax.legend((dfWithoutPythonQS.columns),loc='upper right')
 plt.savefig('withoutPythonQuicksortHistogram.png')
+
+dfWithoutJavaJavascriptPythonQS = result_df.drop(columns=["python_quicksort","java_quicksort","java_builtin_dualqsort"," javascript_quicksort"," javascript_mergesort","javascript_builtin"])
+
+fig, ax = plt.subplots(1, 1)
+plt.title('Histogram Without java/javascript/python quicksort')
+ax.hist(dfWithoutJavaJavascriptPythonQS)
+ax.legend((dfWithoutJavaJavascriptPythonQS.columns),loc='upper right')
+plt.savefig('withoutJavaJavascriptPythonQicksortHistogram.png')
