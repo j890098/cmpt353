@@ -6,6 +6,7 @@ from statsmodels.stats import multicomp
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 import matplotlib.pyplot as plt
 
+# csvs = ['CSIL-data/c_data.csv','CSIL-data/javascript_data.csv','CSIL-data/python_data.csv','CSIL-data/java_sorts.csv']
 csvs = ['data/c_data.csv','data/javascript_data.csv','data/python_data.csv','data/java_sorts.csv']
 # Create an empty list to store DataFrames
 dfs = []
@@ -53,23 +54,29 @@ print(description.sort_values(by = "mean", axis = 1))
 
 # Make some Visualizations
 fig, ax = plt.subplots(1, 1)
+# plt.title('Histogram Of All Sorts (CSIL)')
 plt.title('Histogram Of All Sorts')
 ax.hist(result_df)
 ax.legend((result_df.columns),loc='upper right')
+# plt.savefig('CSIL-allSortsHistogramCSIL.png')
 plt.savefig('allSortsHistogram.png')
 
 dfWithoutPythonQS = result_df.drop(columns="python_quicksort")
 
 fig, ax = plt.subplots(1, 1)
+# plt.title('Histogram Without Python Quicksort (CSIL)')
 plt.title('Histogram Without Python Quicksort')
 ax.hist(dfWithoutPythonQS)
 ax.legend((dfWithoutPythonQS.columns),loc='upper right')
+# plt.savefig('CSIL-withoutPythonQuicksortHistogramCSIL.png')
 plt.savefig('withoutPythonQuicksortHistogram.png')
 
 dfWithoutJavaJavascriptPythonQS = result_df.drop(columns=["python_quicksort","java_quicksort","java_builtin_dualqsort"," javascript_quicksort"," javascript_mergesort","javascript_builtin"])
 
 fig, ax = plt.subplots(1, 1)
+# plt.title('Histogram Without java/javascript/python quicksort (CSIL)')
 plt.title('Histogram Without java/javascript/python quicksort')
 ax.hist(dfWithoutJavaJavascriptPythonQS)
 ax.legend((dfWithoutJavaJavascriptPythonQS.columns),loc='upper right')
+# plt.savefig('CSIL-withoutJavaJavascriptPythonQicksortHistogram.png')
 plt.savefig('withoutJavaJavascriptPythonQicksortHistogram.png')
